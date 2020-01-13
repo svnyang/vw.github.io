@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>移动端适配rem&vw计算工具</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link href="css/app.min.css" rel="stylesheet">
+</head>
+<body >
+ <div class="container" id="vm">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 ">
+            <div class="card-header pt-4 pb-4 text-center bg-primary">
+                <span> 移动端适配计算工具 </span>
+            </div>
+            
+            <div class="card tilebox-one">
+                <div class="card-body"  :class="{'has-error':vwValue=='超出范围'}">
+                    <h6 class="text-muted text-uppercase mt-0"> PX</h6>
+                        <input  type="text" class="form-control"   placeholder="请输入元素尺寸 (px)" v-model="vw.el"> 
+                    <span class="text-muted">元素尺寸</span>
+                </div> 
+            </div> 
+
+            <div class="card tilebox-one">
+                <div class="card-body" >
+                    <h6 class="text-muted text-uppercase mt-0"> PX</h6>
+                        <input type="text" class="form-control" placeholder="请输入设计稿宽度 (px)" v-model="vw.psd">
+                    <span class="text-muted">设计稿宽度</span>
+                </div> 
+            </div> 
+
+
+            <div class="card tilebox-one">
+                <div class="card-body" :class="{'has-error':vwValue=='超出范围'}">
+                <i class="dripicons-basket float-right text-muted"> 
+                    <button type="button" class="btn btn-success btn-block" v-if="vw.isCopy">Copied!</button>
+                    <button type="button" class="btn btn-primary btn-block" @click="copyVwValue" v-else>Copy</button>
+                </i>
+                <!-- <h6 class="text-muted text-uppercase mt-0">Vw</h6> -->
+                <h2 class="m-b-20"><input type="text" class="form-control font-w" placeholder="Vw" :value="vwValue" readonly ref="vwVal"></h2>
+                <span class="text-muted">计算结果</span>
+                </div> 
+            </div> 
+
+            <div class="card tilebox-one">
+                <div class="card-body" :class="{'has-error':remValue=='超出范围'}">
+                <i class="dripicons-basket float-right text-muted"> 
+                    <button type="button" class="btn btn-success btn-block" v-if="rem.isCopy">Copied!</button>
+                    <button type="button" class="btn btn-primary btn-block" @click="copyRemValue" v-else>Copy</button>
+                </i>
+                <!-- <h6 class="text-muted text-uppercase mt-0">Rem</h6> -->
+                <h2 class="m-b-20"> <input type="text" class="form-control font-w" placeholder="rem" :value="remValue" readonly ref="remVal"></h2>
+                <span class="text-muted">计算结果</span>
+                </div> 
+            </div> 
+        </div>
+    </div>
+</div> 
+<div class="col-12 text-center">
+    <p class="text-muted"><a class="btn btn-info" href="http://svnyang.cn/" target="_blank">SvnYang.Cn</a></p>
+</div> 
+<footer class="footer footer-alt">© 2019-2020 ⋅ Sun Yang ⋅ svnyang.cn ⋅ loading.svnyang.cn</footer>
+<script src="http://www.jq22.com/jquery/vue.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#vm',
+        data: {
+            vw:{
+                el:"",
+                psd:"",
+                isCopy:false
+            },
+            rem:{
+                el:"",
+                psd:"",
+                isCopy:false
+            }
+        },
+        computed:{
+            vwValue:function () {
+                if(!this.vw.el || !this.vw.psd){
+                    return "";
+                }else {
+                    this.vw.isCopy=false;
+                    return (this.vw.el/this.vw.psd*100).toString().match(/^\d+(?:\.\d{0,5})?/)+'vw';
+                }
+
+            },
+            remValue:function () {
+                if(!this.vw.el || !this.vw.psd){
+                    return "";
+                }else {
+                    this.rem.isCopy=false;
+                    return (this.vw.el/100).toString().match(/^\d+(?:\.\d{0,5})?/)+'rem';
+                }
+
+            }
+        },
+        methods: {
+            copyVwValue:function(){
+                this.$refs.vwVal.select();
+                document.execCommand("Copy");
+                this.vw.isCopy=true;
+            },
+            copyRemValue:function(){
+                this.$refs.remVal.select();
+                document.execCommand("Copy");
+                this.rem.isCopy=true;
+            }
+        }
+    })
+
+  
+</script>
+</body>
+</html>
