@@ -7,7 +7,8 @@
 <meta name="keywords" content="计算器,vw,rem,移动端适配,设计网站,sunyang"/>
 <meta name="description" content="SunYang&#39;s Blog ,设计师网站">
 <link rel="shortcut icon" href="images/favicon-vm.ico" type="image/x-icon">
-<link href="css/app.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/all.min.css" rel="stylesheet">
 <script>
   var _hmt = _hmt || [];
   (function() {
@@ -19,52 +20,81 @@
 </script>
 </head>
 <body >
- <div class="container" id="vm">
-    <div class="row justify-content-center">
-        <div class="col-lg-5 ">
-            <div class="card tilebox-one">
-                <div class="card-header pt-4  text-center ">
-                    <span>IOS & ANDROID 适配计算工具</span>
-                    <p><a  href="https://svnyang.cn/" target="_blank"> www.svnyang.cn</a></p>
-                </div>
-                <div class="card-body"  :class="{'has-error':vwValue=='超出范围'}">
-                    <h6 class="text-muted text-uppercase mt-0"> PX</h6>
-                        <input  type="text" class="form-control form-css"   placeholder="请输入元素尺寸 (px)" v-model="vw.el"> 
-                    <span class="text-muted "></span>
-                </div> 
-                <div class="card-body" >
-                    <h6 class="text-muted text-uppercase mt-0"> PX</h6>
-                        <input type="text" class="form-control form-css" placeholder="请输入设计稿宽度 (px)" v-model="vw.psd">
-                    <span class="text-muted text-bottom"></span>
-                </div> 
-            </div> 
-            <div class="card tilebox-one">
-                <div class="card-body" :class="{'has-error':vwValue=='超出范围'}">
-                <i class="dripicons-basket float-right text-muted"> 
-                    <button type="button" class="btn btn-success btn-block" v-if="vw.isCopy">Copied!</button>
-                    <button type="button" class="btn btn-primary btn-block" @click="copyVwValue" v-else>Copy</button>
-                </i>
-                <!-- <h6 class="text-muted text-uppercase mt-0">Vw</h6> -->
-                <h2 class="m-b-20"><input type="text" class="form-control font-w" placeholder="Vw" :value="vwValue" readonly ref="vwVal"></h2>
-                <span class="text-muted">计算结果</span>
-                </div> 
-            </div> 
 
-            <div class="card tilebox-one">
-                <div class="card-body" :class="{'has-error':remValue=='超出范围'}">
-                <i class="dripicons-basket float-right text-muted"> 
-                    <button type="button" class="btn btn-success btn-block" v-if="rem.isCopy">Copied!</button>
-                    <button type="button" class="btn btn-primary btn-block" @click="copyRemValue" v-else>Copy</button>
-                </i>
-                <!-- <h6 class="text-muted text-uppercase mt-0">Rem</h6> -->
-                <h2 class="m-b-20"> <input type="text" class="form-control font-w" placeholder="rem" :value="remValue" readonly ref="remVal"></h2>
-                <span class="text-muted">计算结果</span>
+
+    <div class="container" id="vm">
+        <div class="row">
+          
+          <div class="col align-self-center">
+            
+            <div class="col-lg-5 m-auto">
+                <div class="card tilebox-one">
+                    <div class="card-header pt-4  text-center ">
+                        <span>IOS & ANDROID 适配计算工具</span>
+                        <p><a  href="https://svnyang.cn/" target="_blank"> Www.SvnYang.Cn</a></p>
+                    </div>
+                    <div class="row btn-link">
+                        <div class="mg-f-2">
+                            <a href="https://dribbble.com/svnyang" target="_blank" class="btn btn-icon-only  " aria-label="github社交链接" data-toggle="tooltip" data-placement="top" title="" data-original-title="Open source projects">
+                                <span aria-hidden="true" class="fab fa-dribbble"></span>
+                            </a>
+                        </div>
+                        <div class="mg-f-2">
+                            <a href="https://www.behance.net/15145549831d8ea" target="_blank" class="btn btn-icon-only  " aria-label="github社交链接" data-toggle="tooltip" data-placement="top" title="" data-original-title="Open source projects">
+                                <span aria-hidden="true" class="fab fa-behance"></span>
+                            </a>
+                        </div>
+                        <div class="mg-f-2">
+                            <a href="https://github.com/svnyang" target="_blank" class="btn btn-icon-only  " aria-label="github社交链接" data-toggle="tooltip" data-placement="top" title="" data-original-title="Open source projects">
+                                <span aria-hidden="true" class="fab fa-github"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body font-color"  :class="{'has-error':vwValue=='超出范围'}">
+                        <h6 class="text-muted text-uppercase mt-0"> PX</h6>
+                            <input  type="text" class="form-control form-css"   placeholder="请输入元素尺寸 (px)" v-model="vw.el"> 
+                        <span class="text-muted "></span>
+                    </div> 
+                    <div class="card-body font-color">
+                        <h6 class="text-muted text-uppercase mt-0"> PX</h6>
+                            <input type="text" class="form-control form-css" placeholder="请输入设计稿宽度 (px)" v-model="vw.psd">
+                        <span class="text-muted text-bottom"></span>
+                    </div> 
                 </div> 
-            </div> 
+                <div class="card tilebox-one">
+                    <div class="card-body" :class="{'has-error':vwValue=='超出范围'}">
+                    <i class="dripicons-basket float-right text-muted"> 
+                        <button type="button" class="btn btn-success btn-block" v-if="vw.isCopy">Copied!</button>
+                        <button type="button" class="btn btn-primary btn-block" @click="copyVwValue" v-else>Copy</button>
+                    </i>
+                    <h2 class="m-b-20"><input type="text" class="form-control font-w" placeholder="Vw" :value="vwValue" readonly ref="vwVal"></h2>
+                    <span class="text-muted">计算结果</span>
+                    </div> 
+                </div> 
+    
+                <div class="card tilebox-one">
+                    <div class="card-body" :class="{'has-error':remValue=='超出范围'}">
+                    <i class="dripicons-basket float-right text-muted"> 
+                        <button type="button" class="btn btn-success btn-block" v-if="rem.isCopy">Copied!</button>
+                        <button type="button" class="btn btn-primary btn-block" @click="copyRemValue" v-else>Copy</button>
+                    </i>
+                    <h2 class="m-b-20"> <input type="text" class="form-control font-w" placeholder="rem" :value="remValue" readonly ref="remVal"></h2>
+                    <span class="text-muted">计算结果</span>
+                    </div> 
+                </div> 
+            </div>
+
+          </div>
+          
         </div>
-    </div>
-</div> 
+      </div>
 <footer class="footer footer-alt">© 2019-2020 ⋅ Sun Yang ⋅ svnyang.cn ⋅ loading.svnyang.cn</footer>
+
+
+
+
+
+
 <script src="https://www.jq22.com/jquery/vue.min.js"></script>
 <script type="text/javascript">
     var vm = new Vue({
