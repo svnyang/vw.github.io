@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="shortcut icon" href="https://favicon.run/favicon?domain=pornhub.com&sz=128"/>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f6fa; }
+        #current-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+        #counter { margin-bottom: 20px; color: #666; }
+        #refresh-button { padding: 8px 16px; background: #4a6fa5; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+        #refresh-button:hover { background: #3b5a85; }
+        .quote-item { background: #f8f9fa; padding: 10px; border-radius: 6px; margin-bottom: 8px; }
+        .english.highlight { font-weight: bold; color: #2b4f81; }
+    </style>
+</head>
+<body>
+
+<div id="current-title"></div>
+<div id="counter"></div>
+<button id="refresh-button">Change Title</button>
+<div id="quotes-container"></div>
+
+<script>
+    // 纯英文励志短句（你会在下面得到 120 条）
+  const quotes = [
+    "Stay strong and keep moving forward.",
+      "Believe in yourself and begin today.",
+      "Small steps still move you ahead.",
+      "Your effort will open new doors.",
+      "Keep going until progress feels natural.",
+      "Great things grow from steady work.",
+      "Be brave enough to start now.",
+      "Every day is a fresh chance to rise.",
+      "Trust the process and stay patient.",
+      "Your future is built by today.",
+      "Do not quit before the breakthrough.",
+      "You are stronger than your excuses.",
+      "Courage turns dreams into plans.",
+      "Consistency beats talent without effort.",
+      "Push through the doubt and continue.",
+      "Keep learning and keep climbing.",
+      "You can begin again at any moment.",
+      "Hard work creates quiet confidence.",
+      "The next step matters most.",
+      "Progress is better than perfection.",
+      "Make today count in a meaningful way.",
+      "Turn pressure into purpose.",
+      "Discipline will carry you farther.",
+      "Keep your focus and protect your energy.",
+      "One decision can change your direction.",
+      "You grow every time you persist.",
+      "Start where you are and use what you have.",
+      "Action creates momentum.",
+      "Better habits build a better life.",
+      "Stay patient with your own growth.",
+      "What you repeat becomes your strength.",
+      "Your best chapter can start today.",
+      "Effort always leaves a mark.",
+      "Success favors the prepared mind.",
+      "Choose progress over comfort.",
+      "Keep showing up for your goals.",
+      "A calm mind makes strong decisions.",
+      "You are capable of more than you think.",
+      "Difficult roads can lead to beautiful places.",
+      "Rise with purpose and move with courage.",
+      "Every challenge can teach you something.",
+      "Stay humble and work in silence.",
+      "Momentum begins with one move.",
+      "You do not need permission to improve.",
+      "Let discipline guide your ambition.",
+      "Your mindset shapes your results.",
+      "Keep building even when it is slow.",
+      "Strong habits create strong outcomes.",
+      "The work you avoid holds your growth.",
+      "Try again with more wisdom.",
+      "Be proud of how far you have come.",
+      "The climb is worth the view.",
+      "A better you is under construction.",
+      "Stay committed to the long game.",
+      "Success is hidden in daily practice.",
+      "Energy follows clear intention.",
+      "You were made to keep evolving.",
+      "Face the day with steady confidence.",
+      "Nothing changes until you do.",
+      "Keep moving even when it feels slow.",
+      "There is power in staying consistent.",
+      "Take the chance before fear decides.",
+      "Every effort becomes part of your story.",
+      "Your dreams deserve your discipline.",
+      "Focus on the step in front of you.",
+      "Strength grows through repeated effort.",
+      "You become what you practice.",
+      "Be patient and keep improving.",
+      "Make your habits match your goals.",
+      "Quiet progress is still progress.",
+      "A strong start begins in the mind.",
+      "Keep your standards high and your excuses low.",
+      "Do the hard thing first.",
+      "Confidence is built through action.",
+      "The journey rewards the persistent.",
+      "You can turn setbacks into fuel.",
+      "Stay focused on what matters most.",
+      "Keep faith in your own becoming.",
+      "Your work today can bless tomorrow.",
+      "Take responsibility and unlock your strength.",
+      "A clear goal sharpens every step.",
+      "Growth often feels uncomfortable at first.",
+      "You are allowed to start small.",
+      "Patience and effort make a powerful pair.",
+      "Turn intention into action.",
+      "Keep your promises to yourself.",
+      "Your pace does not cancel your progress.",
+      "Doubt less and do more.",
+      "Be steady when others are distracted.",
+      "Make discipline your daily advantage.",
+      "A new result needs a new routine.",
+      "Your persistence is your superpower.",
+      "Success starts with self-respect.",
+      "The answer may be one more try away.",
+      "Stay hungry for better days.",
+      "Take the lesson and keep walking.",
+      "You have enough to begin.",
+      "Keep your head clear and your heart strong.",
+      "The effort is shaping you.",
+      "Be bold enough to stay the course.",
+      "Today is a good day to improve.",
+      "You can outgrow your old limits.",
+      "Move with intention and finish with pride.",
+      "Keep lifting your standards.",
+      "A little progress compounds over time.",
+      "Choose courage over comfort again.",
+      "Show up with discipline and grace.",
+      "Your breakthrough may be very close.",
+      "The seed you water will grow.",
+      "Keep your purpose louder than your fear.",
+      "Learning is part of winning.",
+      "You are becoming more resilient each day.",
+      "Stay true to the work that matters.",
+      "One focused hour can change a lot.",
+      "Let today reflect who you want to become.",
+      "Good things take steady effort.",
+      "A strong finish starts with a strong choice.",
+      "Breathe deeply and continue bravely.",
+      "Your next level needs your next step.",
+      "Shine through action, not intention alone."
+];
+
+
+    let usedIndices = [];
+    let displayCount = 0;
+
+    function init() {
+        displayAllQuotes();
+        setRandomTitle();
+        document.getElementById('refresh-button').addEventListener('click', setRandomTitle);
+        updateCounter();
+    }
+
+    function displayAllQuotes() {
+        const container = document.getElementById('quotes-container');
+        container.innerHTML = '';
+        quotes.forEach(text => {
+            const div = document.createElement('div');
+            div.className = 'quote-item';
+            div.innerHTML = `<div class="english">${text}</div>`;
+            container.appendChild(div);
+        });
+    }
+
+    function getRandomQuoteIndex() {
+        if (usedIndices.length >= quotes.length) usedIndices = [];
+        let index;
+        do { index = Math.floor(Math.random() * quotes.length); }
+        while (usedIndices.includes(index));
+        usedIndices.push(index);
+        return index;
+    }
+
+    function setRandomTitle() {
+        const index = getRandomQuoteIndex();
+        const text = quotes[index];
+
+        document.title = text + " | Thank you everyone for your likes and follows.";
+        document.getElementById('current-title').textContent = text;
+
+        displayCount++;
+        updateCounter();
+        highlightCurrentQuote(index);
+        showNotification(`Page title updated to: "${text}"`);
+    }
+
+    function highlightCurrentQuote(index) {
+        document.querySelectorAll('.quote-item').forEach(item => {
+            item.style.background = '#f8f9fa';
+            item.querySelector('.english').classList.remove('highlight');
+        });
+
+        const items = document.querySelectorAll('.quote-item');
+        if (items[index]) {
+            items[index].style.background = '#e8f4fc';
+            items[index].querySelector('.english').classList.add('highlight');
+            items[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function updateCounter() {
+        document.getElementById('counter').textContent =
+            `Title changed ${displayCount} times | Showing ${usedIndices.length} / ${quotes.length}`;
+    }
+
+    function showNotification(message) {
+        const n = document.createElement('div');
+        n.style.cssText = `
+            position: fixed; top: 20px; right: 20px;
+            background: #4a6fa5; color: #fff;
+            padding: 15px 25px; border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: slideIn .3s ease-out;
+        `;
+        n.textContent = message;
+        document.body.appendChild(n);
+        setTimeout(() => {
+            n.style.animation = 'slideOut .3s ease-out forwards';
+            setTimeout(() => n.remove(), 300);
+        }, 3000);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+    `;
+    document.head.appendChild(style);
+
+    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) setRandomTitle(); });
+</script>
+
+</body>
+</html>
